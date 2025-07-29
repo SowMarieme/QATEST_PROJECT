@@ -1,0 +1,571 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.3.2 (Python 3.10.0 on win32)" generated="2025-07-29T23:25:34.592089" rpa="false" schemaversion="5">
+<suite id="s1" name="Test Create Fulfillment" source="C:\Users\elitebook\Documents\QATEST\QATESTPROJECT\lab3-ebay-api-tests\tests\test_create_fulfillment.robot">
+<test id="s1-t1" name="CreateShippingFulfillment_Success" line="57">
+<kw name="Get Ebay Access Token">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-07-29T23:25:34.732800" level="INFO">${credentials} = sowmarie-appeba-SBX-13649ae1c-57a05fa0:SBX-0ba4f28abb2d-d980-488b-8f2e-aa01</msg>
+<var>${credentials}</var>
+<arg>${CLIENT_ID}:${CLIENT_SECRET}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-07-29T23:25:34.732800" elapsed="0.000000"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-07-29T23:25:34.732800" level="FAIL">Evaluating expression 'import base64; base64.b64encode("sowmarie-appeba-SBX-13649ae1c-57a05fa0:SBX-0ba4f28abb2d-d980-488b-8f2e-aa01".encode()).decode()' failed: SyntaxError: invalid syntax (&lt;string&gt;, line 1)</msg>
+<var>${encoded_credentials}</var>
+<arg>import base64; base64.b64encode("${credentials}".encode()).decode()</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="FAIL" start="2025-07-29T23:25:34.732800" elapsed="0.000000">Evaluating expression 'import base64; base64.b64encode("sowmarie-appeba-SBX-13649ae1c-57a05fa0:SBX-0ba4f28abb2d-d980-488b-8f2e-aa01".encode()).decode()' failed: SyntaxError: invalid syntax (&lt;string&gt;, line 1)</status>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<var>&amp;{auth_headers}</var>
+<arg>Authorization=Basic ${encoded_credentials}</arg>
+<arg>Content-Type=application/x-www-form-urlencoded</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" start="2025-07-29T23:25:34.748832" elapsed="0.000000"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<arg>auth</arg>
+<arg>https://api.sandbox.ebay.com/identity/v1/oauth2/token</arg>
+<arg>headers=${auth_headers}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="NOT RUN" start="2025-07-29T23:25:34.748832" elapsed="0.000000"/>
+</kw>
+<kw name="grant_type=client_credentials&amp;scope=https://api.ebay.com/oauth/api_scope">
+<var>${data}</var>
+<status status="NOT RUN" start="2025-07-29T23:25:34.748832" elapsed="0.000000"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<var>${response}</var>
+<arg>auth</arg>
+<arg>data=${data}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" start="2025-07-29T23:25:34.748832" elapsed="0.000000"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="NOT RUN" start="2025-07-29T23:25:34.748832" elapsed="0.000000"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="NOT RUN" start="2025-07-29T23:25:34.748832" elapsed="0.000000"/>
+</kw>
+<kw name="Get From Dictionary">
+<var>${token}</var>
+<arg>${json}</arg>
+<arg>access_token</arg>
+<status status="NOT RUN" start="2025-07-29T23:25:34.748832" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${token}ry</value>
+<value>${json}</value>
+<value>access_token</value>
+<status status="NOT RUN" start="2025-07-29T23:25:34.748832" elapsed="0.000000"/>
+</return>
+<return>
+<value>${token}</value>
+<status status="NOT RUN" start="2025-07-29T23:25:34.748832" elapsed="0.000000"/>
+</return>
+<var>${token}</var>
+<status status="FAIL" start="2025-07-29T23:25:34.732800" elapsed="0.017224">Evaluating expression 'import base64; base64.b64encode("sowmarie-appeba-SBX-13649ae1c-57a05fa0:SBX-0ba4f28abb2d-d980-488b-8f2e-aa01".encode()).decode()' failed: SyntaxError: invalid syntax (&lt;string&gt;, line 1)</status>
+</kw>
+<kw name="Create Ebay API Session">
+<arg>${token}</arg>
+<status status="NOT RUN" start="2025-07-29T23:25:34.750223" elapsed="0.000000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<var>${payload}</var>
+<arg>lineItems=${[{"lineItemId": "1234567890"}]}</arg>
+<arg>shippingCarrierCode=FedEx</arg>
+<arg>shippingTrackingNumber=123456789012</arg>
+<arg>shippingDate=2025-07-29T14:00:00.000Z</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" start="2025-07-29T23:25:34.750623" elapsed="0.000000"/>
+</kw>
+<kw name="Create Shipping Fulfillment">
+<var>${response}</var>
+<arg>${VALID_ORDER_ID}</arg>
+<arg>${payload}</arg>
+<status status="NOT RUN" start="2025-07-29T23:25:34.750623" elapsed="0.000000"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>201</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="NOT RUN" start="2025-07-29T23:25:34.750623" elapsed="0.000000"/>
+</kw>
+<status status="FAIL" start="2025-07-29T23:25:34.732800" elapsed="0.018829">Evaluating expression 'import base64; base64.b64encode("sowmarie-appeba-SBX-13649ae1c-57a05fa0:SBX-0ba4f28abb2d-d980-488b-8f2e-aa01".encode()).decode()' failed: SyntaxError: invalid syntax (&lt;string&gt;, line 1)</status>
+</test>
+<test id="s1-t2" name="CreateShippingFulfillment_InvalidOrderId" line="68">
+<kw name="Get Ebay Access Token">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-07-29T23:25:34.753629" level="INFO">${credentials} = sowmarie-appeba-SBX-13649ae1c-57a05fa0:SBX-0ba4f28abb2d-d980-488b-8f2e-aa01</msg>
+<var>${credentials}</var>
+<arg>${CLIENT_ID}:${CLIENT_SECRET}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-07-29T23:25:34.752629" elapsed="0.001000"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-07-29T23:25:34.753629" level="FAIL">Evaluating expression 'import base64; base64.b64encode("sowmarie-appeba-SBX-13649ae1c-57a05fa0:SBX-0ba4f28abb2d-d980-488b-8f2e-aa01".encode()).decode()' failed: SyntaxError: invalid syntax (&lt;string&gt;, line 1)</msg>
+<var>${encoded_credentials}</var>
+<arg>import base64; base64.b64encode("${credentials}".encode()).decode()</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="FAIL" start="2025-07-29T23:25:34.753629" elapsed="0.000000">Evaluating expression 'import base64; base64.b64encode("sowmarie-appeba-SBX-13649ae1c-57a05fa0:SBX-0ba4f28abb2d-d980-488b-8f2e-aa01".encode()).decode()' failed: SyntaxError: invalid syntax (&lt;string&gt;, line 1)</status>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<var>&amp;{auth_headers}</var>
+<arg>Authorization=Basic ${encoded_credentials}</arg>
+<arg>Content-Type=application/x-www-form-urlencoded</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" start="2025-07-29T23:25:34.753629" elapsed="0.000000"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<arg>auth</arg>
+<arg>https://api.sandbox.ebay.com/identity/v1/oauth2/token</arg>
+<arg>headers=${auth_headers}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="NOT RUN" start="2025-07-29T23:25:34.753629" elapsed="0.000000"/>
+</kw>
+<kw name="grant_type=client_credentials&amp;scope=https://api.ebay.com/oauth/api_scope">
+<var>${data}</var>
+<status status="NOT RUN" start="2025-07-29T23:25:34.753629" elapsed="0.000000"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<var>${response}</var>
+<arg>auth</arg>
+<arg>data=${data}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" start="2025-07-29T23:25:34.753629" elapsed="0.000000"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="NOT RUN" start="2025-07-29T23:25:34.754629" elapsed="0.000000"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="NOT RUN" start="2025-07-29T23:25:34.754629" elapsed="0.000000"/>
+</kw>
+<kw name="Get From Dictionary">
+<var>${token}</var>
+<arg>${json}</arg>
+<arg>access_token</arg>
+<status status="NOT RUN" start="2025-07-29T23:25:34.754629" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${token}ry</value>
+<value>${json}</value>
+<value>access_token</value>
+<status status="NOT RUN" start="2025-07-29T23:25:34.754629" elapsed="0.000000"/>
+</return>
+<return>
+<value>${token}</value>
+<status status="NOT RUN" start="2025-07-29T23:25:34.754629" elapsed="0.000000"/>
+</return>
+<var>${token}</var>
+<status status="FAIL" start="2025-07-29T23:25:34.752629" elapsed="0.002000">Evaluating expression 'import base64; base64.b64encode("sowmarie-appeba-SBX-13649ae1c-57a05fa0:SBX-0ba4f28abb2d-d980-488b-8f2e-aa01".encode()).decode()' failed: SyntaxError: invalid syntax (&lt;string&gt;, line 1)</status>
+</kw>
+<kw name="Create Ebay API Session">
+<arg>${token}</arg>
+<status status="NOT RUN" start="2025-07-29T23:25:34.754629" elapsed="0.000000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<var>${payload}</var>
+<arg>lineItems=${[{"lineItemId": "1234567890"}]}</arg>
+<arg>shippingCarrierCode=FedEx</arg>
+<arg>shippingTrackingNumber=123456789012</arg>
+<arg>shippingDate=2025-07-29T14:00:00.000Z</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" start="2025-07-29T23:25:34.755629" elapsed="0.000000"/>
+</kw>
+<kw name="Create Shipping Fulfillment">
+<var>${response}</var>
+<arg>${INVALID_ORDER_ID}</arg>
+<arg>${payload}</arg>
+<status status="NOT RUN" start="2025-07-29T23:25:34.755629" elapsed="0.000000"/>
+</kw>
+<kw name="Should Be True" owner="BuiltIn">
+<arg>${response.status_code} == 400 or ${response.status_code} == 404</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="NOT RUN" start="2025-07-29T23:25:34.755629" elapsed="0.000000"/>
+</kw>
+<status status="FAIL" start="2025-07-29T23:25:34.752629" elapsed="0.004000">Evaluating expression 'import base64; base64.b64encode("sowmarie-appeba-SBX-13649ae1c-57a05fa0:SBX-0ba4f28abb2d-d980-488b-8f2e-aa01".encode()).decode()' failed: SyntaxError: invalid syntax (&lt;string&gt;, line 1)</status>
+</test>
+<test id="s1-t3" name="GetShippingFulfillment_Success" line="79">
+<kw name="Get Ebay Access Token">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-07-29T23:25:34.757629" level="INFO">${credentials} = sowmarie-appeba-SBX-13649ae1c-57a05fa0:SBX-0ba4f28abb2d-d980-488b-8f2e-aa01</msg>
+<var>${credentials}</var>
+<arg>${CLIENT_ID}:${CLIENT_SECRET}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-07-29T23:25:34.757629" elapsed="0.000000"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-07-29T23:25:34.758629" level="FAIL">Evaluating expression 'import base64; base64.b64encode("sowmarie-appeba-SBX-13649ae1c-57a05fa0:SBX-0ba4f28abb2d-d980-488b-8f2e-aa01".encode()).decode()' failed: SyntaxError: invalid syntax (&lt;string&gt;, line 1)</msg>
+<var>${encoded_credentials}</var>
+<arg>import base64; base64.b64encode("${credentials}".encode()).decode()</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="FAIL" start="2025-07-29T23:25:34.757629" elapsed="0.001000">Evaluating expression 'import base64; base64.b64encode("sowmarie-appeba-SBX-13649ae1c-57a05fa0:SBX-0ba4f28abb2d-d980-488b-8f2e-aa01".encode()).decode()' failed: SyntaxError: invalid syntax (&lt;string&gt;, line 1)</status>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<var>&amp;{auth_headers}</var>
+<arg>Authorization=Basic ${encoded_credentials}</arg>
+<arg>Content-Type=application/x-www-form-urlencoded</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" start="2025-07-29T23:25:34.758629" elapsed="0.000000"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<arg>auth</arg>
+<arg>https://api.sandbox.ebay.com/identity/v1/oauth2/token</arg>
+<arg>headers=${auth_headers}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="NOT RUN" start="2025-07-29T23:25:34.758629" elapsed="0.000000"/>
+</kw>
+<kw name="grant_type=client_credentials&amp;scope=https://api.ebay.com/oauth/api_scope">
+<var>${data}</var>
+<status status="NOT RUN" start="2025-07-29T23:25:34.758629" elapsed="0.000000"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<var>${response}</var>
+<arg>auth</arg>
+<arg>data=${data}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" start="2025-07-29T23:25:34.758629" elapsed="0.000000"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="NOT RUN" start="2025-07-29T23:25:34.758629" elapsed="0.000000"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="NOT RUN" start="2025-07-29T23:25:34.759629" elapsed="0.000000"/>
+</kw>
+<kw name="Get From Dictionary">
+<var>${token}</var>
+<arg>${json}</arg>
+<arg>access_token</arg>
+<status status="NOT RUN" start="2025-07-29T23:25:34.759629" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${token}ry</value>
+<value>${json}</value>
+<value>access_token</value>
+<status status="NOT RUN" start="2025-07-29T23:25:34.759629" elapsed="0.000000"/>
+</return>
+<return>
+<value>${token}</value>
+<status status="NOT RUN" start="2025-07-29T23:25:34.759629" elapsed="0.000000"/>
+</return>
+<var>${token}</var>
+<status status="FAIL" start="2025-07-29T23:25:34.757629" elapsed="0.002000">Evaluating expression 'import base64; base64.b64encode("sowmarie-appeba-SBX-13649ae1c-57a05fa0:SBX-0ba4f28abb2d-d980-488b-8f2e-aa01".encode()).decode()' failed: SyntaxError: invalid syntax (&lt;string&gt;, line 1)</status>
+</kw>
+<kw name="Create Ebay API Session">
+<arg>${token}</arg>
+<status status="NOT RUN" start="2025-07-29T23:25:34.759629" elapsed="0.000000"/>
+</kw>
+<kw name="Get Shipping Fulfillment">
+<var>${response}</var>
+<arg>${VALID_FULFILLMENT_ID}</arg>
+<status status="NOT RUN" start="2025-07-29T23:25:34.759629" elapsed="0.001000"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="NOT RUN" start="2025-07-29T23:25:34.760629" elapsed="0.000000"/>
+</kw>
+<status status="FAIL" start="2025-07-29T23:25:34.756629" elapsed="0.004000">Evaluating expression 'import base64; base64.b64encode("sowmarie-appeba-SBX-13649ae1c-57a05fa0:SBX-0ba4f28abb2d-d980-488b-8f2e-aa01".encode()).decode()' failed: SyntaxError: invalid syntax (&lt;string&gt;, line 1)</status>
+</test>
+<test id="s1-t4" name="GetShippingFulfillment_InvalidId" line="85">
+<kw name="Get Ebay Access Token">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-07-29T23:25:34.762629" level="INFO">${credentials} = sowmarie-appeba-SBX-13649ae1c-57a05fa0:SBX-0ba4f28abb2d-d980-488b-8f2e-aa01</msg>
+<var>${credentials}</var>
+<arg>${CLIENT_ID}:${CLIENT_SECRET}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-07-29T23:25:34.762629" elapsed="0.000000"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-07-29T23:25:34.762629" level="FAIL">Evaluating expression 'import base64; base64.b64encode("sowmarie-appeba-SBX-13649ae1c-57a05fa0:SBX-0ba4f28abb2d-d980-488b-8f2e-aa01".encode()).decode()' failed: SyntaxError: invalid syntax (&lt;string&gt;, line 1)</msg>
+<var>${encoded_credentials}</var>
+<arg>import base64; base64.b64encode("${credentials}".encode()).decode()</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="FAIL" start="2025-07-29T23:25:34.762629" elapsed="0.000000">Evaluating expression 'import base64; base64.b64encode("sowmarie-appeba-SBX-13649ae1c-57a05fa0:SBX-0ba4f28abb2d-d980-488b-8f2e-aa01".encode()).decode()' failed: SyntaxError: invalid syntax (&lt;string&gt;, line 1)</status>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<var>&amp;{auth_headers}</var>
+<arg>Authorization=Basic ${encoded_credentials}</arg>
+<arg>Content-Type=application/x-www-form-urlencoded</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" start="2025-07-29T23:25:34.763629" elapsed="0.000000"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<arg>auth</arg>
+<arg>https://api.sandbox.ebay.com/identity/v1/oauth2/token</arg>
+<arg>headers=${auth_headers}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="NOT RUN" start="2025-07-29T23:25:34.763629" elapsed="0.000000"/>
+</kw>
+<kw name="grant_type=client_credentials&amp;scope=https://api.ebay.com/oauth/api_scope">
+<var>${data}</var>
+<status status="NOT RUN" start="2025-07-29T23:25:34.763629" elapsed="0.000000"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<var>${response}</var>
+<arg>auth</arg>
+<arg>data=${data}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" start="2025-07-29T23:25:34.763629" elapsed="0.000000"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="NOT RUN" start="2025-07-29T23:25:34.763629" elapsed="0.000000"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="NOT RUN" start="2025-07-29T23:25:34.763629" elapsed="0.000000"/>
+</kw>
+<kw name="Get From Dictionary">
+<var>${token}</var>
+<arg>${json}</arg>
+<arg>access_token</arg>
+<status status="NOT RUN" start="2025-07-29T23:25:34.763629" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${token}ry</value>
+<value>${json}</value>
+<value>access_token</value>
+<status status="NOT RUN" start="2025-07-29T23:25:34.763629" elapsed="0.000000"/>
+</return>
+<return>
+<value>${token}</value>
+<status status="NOT RUN" start="2025-07-29T23:25:34.763629" elapsed="0.000000"/>
+</return>
+<var>${token}</var>
+<status status="FAIL" start="2025-07-29T23:25:34.761631" elapsed="0.001998">Evaluating expression 'import base64; base64.b64encode("sowmarie-appeba-SBX-13649ae1c-57a05fa0:SBX-0ba4f28abb2d-d980-488b-8f2e-aa01".encode()).decode()' failed: SyntaxError: invalid syntax (&lt;string&gt;, line 1)</status>
+</kw>
+<kw name="Create Ebay API Session">
+<arg>${token}</arg>
+<status status="NOT RUN" start="2025-07-29T23:25:34.764736" elapsed="0.000000"/>
+</kw>
+<kw name="Get Shipping Fulfillment">
+<var>${response}</var>
+<arg>${INVALID_FULFILLMENT_ID}</arg>
+<status status="NOT RUN" start="2025-07-29T23:25:34.764736" elapsed="0.000000"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>404</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="NOT RUN" start="2025-07-29T23:25:34.765739" elapsed="0.000000"/>
+</kw>
+<status status="FAIL" start="2025-07-29T23:25:34.761631" elapsed="0.004108">Evaluating expression 'import base64; base64.b64encode("sowmarie-appeba-SBX-13649ae1c-57a05fa0:SBX-0ba4f28abb2d-d980-488b-8f2e-aa01".encode()).decode()' failed: SyntaxError: invalid syntax (&lt;string&gt;, line 1)</status>
+</test>
+<test id="s1-t5" name="GetShippingFulfillments_Success" line="91">
+<kw name="Get Ebay Access Token">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-07-29T23:25:34.767582" level="INFO">${credentials} = sowmarie-appeba-SBX-13649ae1c-57a05fa0:SBX-0ba4f28abb2d-d980-488b-8f2e-aa01</msg>
+<var>${credentials}</var>
+<arg>${CLIENT_ID}:${CLIENT_SECRET}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-07-29T23:25:34.767582" elapsed="0.000000"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-07-29T23:25:34.768589" level="FAIL">Evaluating expression 'import base64; base64.b64encode("sowmarie-appeba-SBX-13649ae1c-57a05fa0:SBX-0ba4f28abb2d-d980-488b-8f2e-aa01".encode()).decode()' failed: SyntaxError: invalid syntax (&lt;string&gt;, line 1)</msg>
+<var>${encoded_credentials}</var>
+<arg>import base64; base64.b64encode("${credentials}".encode()).decode()</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="FAIL" start="2025-07-29T23:25:34.767582" elapsed="0.001007">Evaluating expression 'import base64; base64.b64encode("sowmarie-appeba-SBX-13649ae1c-57a05fa0:SBX-0ba4f28abb2d-d980-488b-8f2e-aa01".encode()).decode()' failed: SyntaxError: invalid syntax (&lt;string&gt;, line 1)</status>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<var>&amp;{auth_headers}</var>
+<arg>Authorization=Basic ${encoded_credentials}</arg>
+<arg>Content-Type=application/x-www-form-urlencoded</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" start="2025-07-29T23:25:34.768589" elapsed="0.000000"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<arg>auth</arg>
+<arg>https://api.sandbox.ebay.com/identity/v1/oauth2/token</arg>
+<arg>headers=${auth_headers}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="NOT RUN" start="2025-07-29T23:25:34.768589" elapsed="0.000000"/>
+</kw>
+<kw name="grant_type=client_credentials&amp;scope=https://api.ebay.com/oauth/api_scope">
+<var>${data}</var>
+<status status="NOT RUN" start="2025-07-29T23:25:34.768589" elapsed="0.000000"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<var>${response}</var>
+<arg>auth</arg>
+<arg>data=${data}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" start="2025-07-29T23:25:34.768589" elapsed="0.000000"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="NOT RUN" start="2025-07-29T23:25:34.768589" elapsed="0.000000"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="NOT RUN" start="2025-07-29T23:25:34.768589" elapsed="0.000000"/>
+</kw>
+<kw name="Get From Dictionary">
+<var>${token}</var>
+<arg>${json}</arg>
+<arg>access_token</arg>
+<status status="NOT RUN" start="2025-07-29T23:25:34.768589" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${token}ry</value>
+<value>${json}</value>
+<value>access_token</value>
+<status status="NOT RUN" start="2025-07-29T23:25:34.768589" elapsed="0.000000"/>
+</return>
+<return>
+<value>${token}</value>
+<status status="NOT RUN" start="2025-07-29T23:25:34.769588" elapsed="0.000000"/>
+</return>
+<var>${token}</var>
+<status status="FAIL" start="2025-07-29T23:25:34.767582" elapsed="0.002006">Evaluating expression 'import base64; base64.b64encode("sowmarie-appeba-SBX-13649ae1c-57a05fa0:SBX-0ba4f28abb2d-d980-488b-8f2e-aa01".encode()).decode()' failed: SyntaxError: invalid syntax (&lt;string&gt;, line 1)</status>
+</kw>
+<kw name="Create Ebay API Session">
+<arg>${token}</arg>
+<status status="NOT RUN" start="2025-07-29T23:25:34.769588" elapsed="0.000000"/>
+</kw>
+<kw name="Get Shipping Fulfillments List">
+<var>${response}</var>
+<arg>${VALID_ORDER_ID}</arg>
+<status status="NOT RUN" start="2025-07-29T23:25:34.769588" elapsed="0.000000"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="NOT RUN" start="2025-07-29T23:25:34.770591" elapsed="0.000000"/>
+</kw>
+<status status="FAIL" start="2025-07-29T23:25:34.766740" elapsed="0.003851">Evaluating expression 'import base64; base64.b64encode("sowmarie-appeba-SBX-13649ae1c-57a05fa0:SBX-0ba4f28abb2d-d980-488b-8f2e-aa01".encode()).decode()' failed: SyntaxError: invalid syntax (&lt;string&gt;, line 1)</status>
+</test>
+<test id="s1-t6" name="GetShippingFulfillments_InvalidOrderId" line="97">
+<kw name="Get Ebay Access Token">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-07-29T23:25:34.772657" level="INFO">${credentials} = sowmarie-appeba-SBX-13649ae1c-57a05fa0:SBX-0ba4f28abb2d-d980-488b-8f2e-aa01</msg>
+<var>${credentials}</var>
+<arg>${CLIENT_ID}:${CLIENT_SECRET}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-07-29T23:25:34.772657" elapsed="0.000000"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-07-29T23:25:34.773684" level="FAIL">Evaluating expression 'import base64; base64.b64encode("sowmarie-appeba-SBX-13649ae1c-57a05fa0:SBX-0ba4f28abb2d-d980-488b-8f2e-aa01".encode()).decode()' failed: SyntaxError: invalid syntax (&lt;string&gt;, line 1)</msg>
+<var>${encoded_credentials}</var>
+<arg>import base64; base64.b64encode("${credentials}".encode()).decode()</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="FAIL" start="2025-07-29T23:25:34.772657" elapsed="0.001027">Evaluating expression 'import base64; base64.b64encode("sowmarie-appeba-SBX-13649ae1c-57a05fa0:SBX-0ba4f28abb2d-d980-488b-8f2e-aa01".encode()).decode()' failed: SyntaxError: invalid syntax (&lt;string&gt;, line 1)</status>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<var>&amp;{auth_headers}</var>
+<arg>Authorization=Basic ${encoded_credentials}</arg>
+<arg>Content-Type=application/x-www-form-urlencoded</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" start="2025-07-29T23:25:34.773684" elapsed="0.000000"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<arg>auth</arg>
+<arg>https://api.sandbox.ebay.com/identity/v1/oauth2/token</arg>
+<arg>headers=${auth_headers}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="NOT RUN" start="2025-07-29T23:25:34.773684" elapsed="0.000000"/>
+</kw>
+<kw name="grant_type=client_credentials&amp;scope=https://api.ebay.com/oauth/api_scope">
+<var>${data}</var>
+<status status="NOT RUN" start="2025-07-29T23:25:34.773684" elapsed="0.000000"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<var>${response}</var>
+<arg>auth</arg>
+<arg>data=${data}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="NOT RUN" start="2025-07-29T23:25:34.773684" elapsed="0.000000"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="NOT RUN" start="2025-07-29T23:25:34.773684" elapsed="0.000000"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="NOT RUN" start="2025-07-29T23:25:34.774654" elapsed="0.000000"/>
+</kw>
+<kw name="Get From Dictionary">
+<var>${token}</var>
+<arg>${json}</arg>
+<arg>access_token</arg>
+<status status="NOT RUN" start="2025-07-29T23:25:34.774654" elapsed="0.000000"/>
+</kw>
+<return>
+<value>${token}ry</value>
+<value>${json}</value>
+<value>access_token</value>
+<status status="NOT RUN" start="2025-07-29T23:25:34.774654" elapsed="0.000000"/>
+</return>
+<return>
+<value>${token}</value>
+<status status="NOT RUN" start="2025-07-29T23:25:34.774654" elapsed="0.000000"/>
+</return>
+<var>${token}</var>
+<status status="FAIL" start="2025-07-29T23:25:34.771649" elapsed="0.003005">Evaluating expression 'import base64; base64.b64encode("sowmarie-appeba-SBX-13649ae1c-57a05fa0:SBX-0ba4f28abb2d-d980-488b-8f2e-aa01".encode()).decode()' failed: SyntaxError: invalid syntax (&lt;string&gt;, line 1)</status>
+</kw>
+<kw name="Create Ebay API Session">
+<arg>${token}</arg>
+<status status="NOT RUN" start="2025-07-29T23:25:34.774654" elapsed="0.000000"/>
+</kw>
+<kw name="Get Shipping Fulfillments List">
+<var>${response}</var>
+<arg>${INVALID_ORDER_ID}</arg>
+<status status="NOT RUN" start="2025-07-29T23:25:34.775660" elapsed="0.000000"/>
+</kw>
+<kw name="Should Be True" owner="BuiltIn">
+<arg>${response.status_code} == 400 or ${response.status_code} == 404</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="NOT RUN" start="2025-07-29T23:25:34.775660" elapsed="0.000000"/>
+</kw>
+<status status="FAIL" start="2025-07-29T23:25:34.771649" elapsed="0.004011">Evaluating expression 'import base64; base64.b64encode("sowmarie-appeba-SBX-13649ae1c-57a05fa0:SBX-0ba4f28abb2d-d980-488b-8f2e-aa01".encode()).decode()' failed: SyntaxError: invalid syntax (&lt;string&gt;, line 1)</status>
+</test>
+<status status="FAIL" start="2025-07-29T23:25:34.608149" elapsed="0.168504"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="6" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Test Create Fulfillment" id="s1" pass="0" fail="6" skip="0">Test Create Fulfillment</stat>
+</suite>
+</statistics>
+<errors>
+<msg time="2025-07-29T23:25:34.608149" level="ERROR">Error in file 'C:\Users\elitebook\Documents\QATEST\QATESTPROJECT\lab3-ebay-api-tests\tests\test_create_fulfillment.robot' on line 14: Setting variable '${INVALID_FULFILLMENT_ID} invalidFulfillmentId' failed: Invalid variable name '${INVALID_FULFILLMENT_ID} invalidFulfillmentId'.</msg>
+</errors>
+</robot>
