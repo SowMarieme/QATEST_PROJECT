@@ -1,0 +1,8 @@
+URL_AUTOMATION="https://automationplayground.com/crm/"
+USERNAME_AUTOMATION="admin@robotframeworktutorial.com" 
+PASSWORD_AUTOMATION="pwd"
+Browser = "firefox"
+CUSTOMER_EMAIL="testAutomap@gmail.com"
+CUSTOMER_FIRST_NAME="TestName"
+CUSTOMER_LAST_NAME="TestLastName"
+CUSTOMER_City="Test"
